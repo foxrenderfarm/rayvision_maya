@@ -298,6 +298,7 @@ class Maya(JsonHandle):
                            replace("\\", "/")),
             "cg_plugins": self.task.task_info["software_config"]["plugins"],
             "cg_version": self.version,
+            "user_id": self.task.user_id,
             "channel": channel
         }
 

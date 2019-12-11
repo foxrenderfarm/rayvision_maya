@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-*.py[cod]
+*.py[co]
 
 # PyCharm project files
 .idea/
