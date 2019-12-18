@@ -376,7 +376,7 @@ class Maya(JsonHandle):
 
             for path in path_list:
                 resources = {}
-                local = path.split("  (mtime)")[0]
+                local = path
                 server = utils.convert_path(local)
                 resources["local"] = local.replace("\\", "/")
                 resources["server"] = server
