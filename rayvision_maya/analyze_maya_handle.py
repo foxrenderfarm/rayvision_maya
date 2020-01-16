@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """A interface for maya."""
 
 # Import built-in models
@@ -322,28 +323,28 @@ class Maya(JsonHandle):
                 json.dump(options, f_options_json, ensure_ascii=False,
                           indent=4)
 
-            cmd = ('\"%s\" -batch -command \"python \\\"'
-                   'options=dict(task_json=\\\\\\\"%s\\\\\\\",'
-                   'channel=\\\\\\\"%s\\\\\\\",'
-                   'client_script=\\\\\\\"%s\\\\\\\");'
-                   'import sys;sys.path.insert(0, \\\\\\\"%s\\\\\\\");'
-                   'import Analyze;reload(Analyze);'
-                   'Analyze.analyze_maya(options)\\\"\"') % (
-                       self.exe_path, self.task_json,
-                       "client", script_path, analyze_py_path)
+            # cmd = ('\"%s\" -batch -command \"python \\\"'
+            #        'options=dict(task_json=\\\\\\\"%s\\\\\\\",'
+            #        'channel=\\\\\\\"%s\\\\\\\",'
+            #        'client_script=\\\\\\\"%s\\\\\\\");'
+            #        'import sys;sys.path.insert(0, \\\\\\\"%s\\\\\\\");'
+            #        'import Analyze;reload(Analyze);'
+            #        'Analyze.analyze_maya(options)\\\"\"') % (
+            #            self.exe_path, self.task_json,
+            #            "client", script_path, analyze_py_path)
 
-            # cmd = ('"{exe_path}" -batch -command "python \\\"channel,'
-            #        'options_json=\\\\\\\"{channel}\\\\\\\",'
-            #        '\\\\\\\"{options_json}\\\\\\\";'
-            #        'import sys;sys.path.insert(0,'
-            #        ' \\\\\\\"{script_path}\\\\\\\");'
-            #        'execfile(\\\\\\\"{analyze_py_path}\\\\\\\")\\\""').format(
-            #            exe_path=self.exe_path,
-            #            channel=channel,
-            #            options_json=options_json,
-            #            script_path=script_path,
-            #            analyze_py_path=analyze_py_path,
-            #            )
+            cmd = ('"{exe_path}" -batch -command "python \\\"channel,'
+                   'options_json=\\\\\\\"{channel}\\\\\\\",'
+                   '\\\\\\\"{options_json}\\\\\\\";'
+                   'import sys;sys.path.insert(0,'
+                   ' \\\\\\\"{script_path}\\\\\\\");'
+                   'execfile(\\\\\\\"{analyze_py_path}\\\\\\\")\\\""').format(
+                       exe_path=self.exe_path,
+                       channel=channel,
+                       options_json=options_json,
+                       script_path=script_path,
+                       analyze_py_path=analyze_py_path,
+                       )
 
         self.logger.debug(cmd)
         code, _, _ = self.cmd.run(cmd, shell=True)
