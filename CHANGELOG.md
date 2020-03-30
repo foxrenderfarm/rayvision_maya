@@ -4,3 +4,8 @@
 * update analyze script for maya and add temp.py file ([d826d63](https://github.com/renderbus/rayvision_maya/commit/d826d63))
 * update Analyze.so and Analyze.pyd ([65f2be0](https://github.com/renderbus/rayvision_maya/commit/65f2be0))
 
+
+## 1.1.0 (2020-03-30)
+
+* The analysis function can be completely independent
+* update requirements.txt

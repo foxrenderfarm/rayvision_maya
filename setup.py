@@ -13,12 +13,12 @@ def parse_requirements(filename):
 
 setup(
     name='rayvision_maya',
-    author='RayVision',
+    author='Shenzhen Rayvision Technology Co., Ltd',
     author_email='developer@rayvision.com',
     url='https://gitlab.renderbus.com/internal/rayvision_maya',
     package_dir={'': '.'},
     packages=find_packages('.'),
-    description='',
+    description='A Python-based API for Using Renderbus cloud rendering service.',
     entry_points={},
     install_requires=list(parse_requirements('requirements.txt')),
     package_data={
