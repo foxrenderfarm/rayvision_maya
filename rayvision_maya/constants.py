@@ -1,3 +1,3 @@
 """The constants of the rayvision_maya."""
 
-PACKAGE_NAME = "maya"
+PACKAGE_NAME = "rayvision_maya"
