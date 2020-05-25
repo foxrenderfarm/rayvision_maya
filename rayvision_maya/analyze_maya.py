@@ -5,11 +5,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import hashlib
-
-from builtins import str
-
 import codecs
+import hashlib
 import json
 import logging
 import os
@@ -17,16 +14,16 @@ import re
 import sys
 import time
 import traceback
+from builtins import str
 
-from rayvision_utils import utils
 from rayvision_utils import constants
+from rayvision_utils import utils
 from rayvision_utils.cmd import Cmd
 from rayvision_utils.exception import tips_code
 from rayvision_utils.exception.error_msg import ERROR9899_CGEXE_NOTEXIST
-from rayvision_utils.exception.exception import AnalyseFailError
+from rayvision_utils.exception.exception import AnalyseFailError, CGFileNotExistsError
 from rayvision_utils.exception.exception import CGExeNotExistError
 from rayvision_utils.exception.exception import GetCGVersionError
-
 
 VERSION = sys.version_info[0]
 
@@ -93,7 +90,7 @@ class AnalyzeMaya(object):
     def check_path(tmp_path):
         """Check if the path exists."""
         if not os.path.exists(tmp_path):
-            raise Exception("{} is not found".format(tmp_path))
+            raise CGFileNotExistsError("{} is not found".format(tmp_path))
 
     def add_tip(self, code, info):
         """Add error message.
@@ -421,7 +418,7 @@ class AnalyzeMaya(object):
 
         utils.json_save(self.upload_json, self.upload_info)
 
-    def analyse(self, no_upload=False):
+    def analyse(self, no_upload=False, exe_path=""):
         """Build a cmd command to perform an analysis scenario.
 
         Args:
@@ -431,7 +428,8 @@ class AnalyzeMaya(object):
             AnalyseFailError: Analysis scenario failed.
 
         """
-        exe_path = self.analyse_cg_file()
+        if not os.path.exists(exe_path):
+            exe_path = self.analyse_cg_file()
         self.write_task_json()
         analyse_script_name = "Analyze"
         channel = 'api'
@@ -458,10 +456,10 @@ class AnalyzeMaya(object):
                    'import sys;sys.path.insert(0, \'{script_path}\');'
                    'import {analyse_script_name};reload({analyse_script_name}'
                    ');{analyse_script_name}.analyze_maya(options)\\""').format(
-                       exe_path=exe_path,
-                       options=options,
-                       script_path=script_path,
-                       analyse_script_name=analyse_script_name)
+                exe_path=exe_path,
+                options=options,
+                script_path=script_path,
+                analyse_script_name=analyse_script_name)
         else:
             options_json = os.path.join(os.path.dirname(
                 self.task_json), 'options.json')
@@ -474,12 +472,12 @@ class AnalyzeMaya(object):
                    'import sys;sys.path.insert(0,'
                    ' \\\\\\\"{script_path}\\\\\\\");'
                    'execfile(\\\\\\\"{analyze_py_path}\\\\\\\")\\\""').format(
-                       exe_path=exe_path,
-                       channel=channel,
-                       options_json=options_json,
-                       script_path=script_path,
-                       analyze_py_path=analyze_py_path,
-                       )
+                exe_path=exe_path,
+                channel=channel,
+                options_json=options_json,
+                script_path=script_path,
+                analyze_py_path=analyze_py_path,
+            )
 
         self.logger.debug(cmd)
         code, _, _ = Cmd.run(cmd, shell=True)
