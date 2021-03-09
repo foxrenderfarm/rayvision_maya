@@ -16,6 +16,8 @@ import time
 import traceback
 from builtins import str
 
+from rayvision_maya.constants import PACKAGE_NAME
+from rayvision_log import init_logger
 from rayvision_utils import constants
 from rayvision_utils import utils
 from rayvision_utils.cmd import Cmd
@@ -33,7 +35,12 @@ class AnalyzeMaya(object):
                  plugin_config, render_software="Maya", render_layer_type="0",
                  input_project_path=None, local_os=None, workspace=None,
                  custom_exe_path=None,
-                 platform="2"):
+                 platform="2",
+                 logger=None,
+                 log_folder=None,
+                 log_name=None,
+                 log_level="DEBUG"
+                 ):
         """Initialize and examine the analysis information.
 
         Args:
@@ -47,10 +54,17 @@ class AnalyzeMaya(object):
             local_os (str): System name, linux or windows.
             workspace (str): Analysis out of the result file storage path.
             custom_exe_path (str): Customize the exe path for the analysis.
-            platform (str): Platform no.
-
+            platform (str): Platform num.
+            logger (object, optional): Custom log object.
+            log_folder (str, optional): Custom log save location.
+            log_name (str, optional): Custom log file name.
+            log_level (string):  Set log level, example: "DEBUG","INFO","WARNING","ERROR".
         """
-        self.logger = logging.getLogger(__name__)
+        self.logger = logger
+        if not self.logger:
+            init_logger(PACKAGE_NAME, log_folder, log_name)
+            self.logger = logging.getLogger(__name__)
+            self.logger.setLevel(level=log_level.upper())
 
         self.check_path(cg_file)
         self.cg_file = cg_file
