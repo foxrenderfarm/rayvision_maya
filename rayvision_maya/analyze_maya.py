@@ -411,16 +411,13 @@ class AnalyzeMaya(object):
             }
         ]
 
-        for asset_dict in assets:
-            path_list = asset_dict["path"]
-
-            for path in path_list:
-                resources = {}
-                local = path.split("  (mtime)")[0]
-                server = utils.convert_path(local)
-                resources["local"] = local.replace("\\", "/")
-                resources["server"] = server
-                upload_asset.append(resources)
+        for path in assets:
+            resources = {}
+            local = path.split("  (mtime")[0]
+            server = utils.convert_path(local)
+            resources["local"] = local.replace("\\", "/")
+            resources["server"] = server
+            upload_asset.append(resources)
 
         # Add the cg file to upload.json
         upload_asset.append({
