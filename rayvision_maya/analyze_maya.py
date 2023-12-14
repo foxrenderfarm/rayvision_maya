@@ -464,8 +464,8 @@ class AnalyzeMaya(object):
 
         if self.local_os == 'windows':
             cmd = ('"{exe_path}" -command "python \\"options={options};'
-                   'import sys;sys.path.insert(0, \'{script_path}\');'
-                   'import {analyse_script_name};reload({analyse_script_name}'
+                   'import sys, imp;sys.path.insert(0, \'{script_path}\');'
+                   'import {analyse_script_name};imp.reload({analyse_script_name}'
                    ');{analyse_script_name}.analyze_maya(options)\\""').format(
                 exe_path=exe_path,
                 options=options,
