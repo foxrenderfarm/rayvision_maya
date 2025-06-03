@@ -18,11 +18,12 @@ setup(
     url='https://gitlab.renderbus.com/internal/rayvision_maya',
     package_dir={'': '.'},
     packages=find_packages('.'),
+    include_package_data=True,
     description='A Python-based API for Using Renderbus cloud rendering service.',
     entry_points={},
     install_requires=list(parse_requirements('requirements.txt')),
     package_data={
-        'rayvision_maya': ['*.so', '*.pyd', '*.mel'],
+        'rayvision_maya': ["./Analyze/*/*"],
     },
     classifiers=[
         'Programming Language :: Python',
@@ -30,5 +31,5 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     use_scm_version=True,
-    setup_requires=['setuptools_scm'],
+    setup_requires=["setuptools_scm<8.0.0"],
 )

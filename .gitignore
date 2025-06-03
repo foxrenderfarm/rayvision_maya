@@ -20,6 +20,3 @@ result/
 # Coverage output
 .coverage
 /venv/
-
-# npm
-package.json
