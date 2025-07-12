@@ -43,15 +43,10 @@ update_task = {
 }
 update_task_info(update_task, analyze_obj.task_json)
 
-custom_info_to_task = {
-    "env": "houdini_env"
-}
+custom_info_to_task = {}
 append_to_task(custom_info_to_task, analyze_obj.task_json)
 
-custom_info_to_upload = [
-    r"D:\files\CG FILE\Shark Test\home_test.build",
-    r"C:\workspace\1585303109\task.json"
-]
+custom_info_to_upload = []
 append_to_upload(custom_info_to_upload, analyze_obj.upload_json)
 
 # Step3: Set platform hardware configuration information
